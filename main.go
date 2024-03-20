@@ -29,12 +29,13 @@ func main() {
 	fmt.Println("Note:\tTimes, e.g. 8:30 can be input with our without the colon.")
 	fmt.Println(strings.Repeat("-", 50))
 
-	var result string
+	var result, resultMessage string
 
 	startTime, pauseDuration := getUserStartAndPause()
 
 	if timeFlag {
 		result = calculateEnd(startTime, pauseDuration)
+		resultMessage = fmt.Sprintf("You will have worked %d hours at:\t%s", defaultHoursPerDay, result)
 	} else {
 		endTime, err := getUserEnd()
 		if err != nil {
@@ -42,9 +43,11 @@ func main() {
 			endTime = calculateEnd(startTime, pauseDuration)
 		}
 		result = calculateWorkingHours(startTime, pauseDuration, endTime)
+		resultMessage = fmt.Sprint("Total working hours:\t", result)
 	}
 
-	fmt.Println(result)
+	fmt.Println()
+	fmt.Println(resultMessage)
 }
 
 // Split a string at the colon, making sure that right is always at least 2 characters
