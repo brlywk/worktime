@@ -7,6 +7,8 @@ import (
 	"strconv"
 	"strings"
 	"time"
+
+	"golang.design/x/clipboard"
 )
 
 // Some default values to make this robust
@@ -43,11 +45,21 @@ func main() {
 			endTime = calculateEnd(startTime, pauseDuration)
 		}
 		result = calculateWorkingHours(startTime, pauseDuration, endTime)
-		resultMessage = fmt.Sprint("Total working hours:\t", result)
+		resultMessage = fmt.Sprint("Total working hours:\t\033[31m", result, " \033[0m")
 	}
 
 	fmt.Println()
 	fmt.Println(resultMessage)
+	fmt.Println()
+
+	// initialise clipboard if available
+	err := clipboard.Init()
+	if err != nil {
+		fmt.Println("Clipboard functionality is not available :(")
+	}
+
+	clipboard.Write(clipboard.FmtText, []byte(result))
+	fmt.Println("The result has been copied to your clipboard.")
 }
 
 // Split a string at the colon, making sure that right is always at least 2 characters
