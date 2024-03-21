@@ -113,7 +113,7 @@ func parseStringTime(str string) time.Time {
 		// (h)our and (m)inute needed for splitting and inserting colons
 		var h, m string
 
-		switch true {
+		switch {
 		case len(str) == 1:
 			str = fmt.Sprint(str, ":")
 
@@ -176,7 +176,7 @@ func calculateEnd(startTime string, pauseDuration string) string {
 }
 
 // calculateWorkingHours calculates the total number of hours from startTime to endTime,
-// exluding pauseDuration
+// excluding pauseDuration
 //
 // Returns a string representing the total number of hours, rounding down to the
 // nearest "15 minutes" (e.g. 8h25min -> 8:25 -> 8:15)
